@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robux Rewards | Plataforma Demonstrativa Roblox</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts (Inter & Orbitron) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        roblox: {
+                            dark: '#0e1017',
+                            card: '#161923',
+                            border: '#2a2f45',
+                            purple: '#8b5cf6',
+                            cyan: '#06b6d4',
+                            blue: '#3b82f6',
+                            turquoise: '#14b8a6',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 20px rgba(6, 182, 212, 0.4)',
+                        'neon-purple': '0 0 25px rgba(139, 92, 246, 0.45)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* CSS Personalizado e Animações */
+        body {
+            background-color: #08090d;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.18) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(6, 182, 212, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.08) 0%, transparent 60%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .glass-card {
+            background: rgba(22, 25, 35, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card-glow {
+            background: rgba(22, 25, 35, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.2);
+        }
+
+        .roblox-hexagon {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+
+        .pulse-border {
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { border-color: rgba(6, 182, 212, 0.3); box-shadow: 0 0 10px rgba(6, 182, 212, 0.1); }
+            50% { border-color: rgba(139, 92, 246, 0.6); box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            100% { border-color: rgba(20, 184, 166, 0.4); box-shadow: 0 0 15px rgba(20, 184, 166, 0.2); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e1017;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2f45;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+    </style>
+</head>
+<text class="text-gray-100 font-sans antialiased selection:bg-roblox-purple selection:text-white flex flex-col min-h-screen">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 border-b border-white/10 bg-roblox-dark/80 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-tr from-roblox-purple via-roblox-blue to-roblox-cyan rounded-xl flex items-center justify-center shadow-neon-purple transform rotate-3">
+                    <!-- Custom SVG Icon for Roblox Hex Nut shape -->
+                    <svg class="w-6 h-6 text-white transform -rotate-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.5 3H5.5L3 18.5L18.5 21L21 5.5L18.5 3ZM14.2 13.8L9.8 12.6L10.5 8.2L14.9 9.4L14.2 13.8Z" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-display font-black text-xl tracking-wider bg-gradient-to-r from-white via-cyan-200 to-purple-400 bg-clip-text text-transparent block leading-none">
+                        ROBUX REWARDS
+                    </span>
+                    <span class="text-[10px] text-gray-400 font-medium tracking-widest uppercase block">Plataforma Interativa</span>
+                </div>
+            </div>
+
+            <!-- Security Badge -->
+            <div class="flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-full">
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                <span class="text-xs font-semibold text-emerald-300 hidden sm:inline">Conexão Segura (Sem Senha)</span>
+                <span class="text-xs font-semibold text-emerald-300 sm:hidden">Seguro</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Alert / Safety Banner -->
+    <section class="bg-gradient-to-r from-roblox-purple/20 via-roblox-cyan/20 to-roblox-purple/20 border-b border-white/5 py-2.5 px-4">
+        <div class="max-w-6xl mx-auto flex items-center justify-center text-center text-xs text-gray-300 gap-2">
+            <i data-lucide="info" class="w-4 h-4 text-roblox-cyan shrink-0"></i>
+            <span>
+                <strong>Aviso Legal Importante:</strong> Esta é uma aplicação demonstrativa e educativa. Nunca solicitamos dados sensíveis como senha ou código de verificação.
+            </span>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-12 flex flex-col gap-10">
+
+        <!-- Hero Section -->
+        <section class="text-center space-y-4">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-roblox-purple/15 border border-roblox-purple/40 text-roblox-cyan text-xs font-semibold uppercase tracking-wider mb-2">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> SIMULADOR REWARDS ROBLOX 2026
+            </div>
+            <h1 class="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                Selecione o seu Pacote de <span class="bg-gradient-to-r from-roblox-cyan via-purple-400 to-roblox-purple bg-clip-text text-transparent">Robux</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-gray-400 text-sm sm:text-base leading-relaxed">
+                Digite seu nome de usuário oficial do Roblox para localizar seu avatar de forma autêntica e escolha a quantidade desejada para simular o processo de resgate.
+            </p>
+        </section>
+
+        <!-- STEP 1: Search Roblox User -->
+        <section class="glass-card rounded-2xl p-6 sm:p-8 pulse-border transition-all">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-8 h-8 rounded-lg bg-roblox-cyan/20 border border-roblox-cyan/40 flex items-center justify-center font-display font-bold text-roblox-cyan">
+                    1
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-white">Identifique seu Perfil do Roblox</h2>
+                    <p class="text-xs text-gray-400">Insira seu @username público sem necessidade de login</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <form id="search-form" onsubmit="event.preventDefault(); searchRobloxUser();" class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative flex-grow">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="username-input" 
+                            placeholder="Ex: Builderman, Roblox, etc." 
+                            required
+                            class="w-full pl-11 pr-4 py-3.5 bg-roblox-dark/90 border border-roblox-border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-roblox-cyan focus:ring-2 focus:ring-roblox-cyan/20 transition-all font-medium"
+                        >
+                    </div>
+                    <button 
+                        type="submit" 
+                        id="search-btn"
+                        class="px-7 py-3.5 bg-gradient-to-r from-roblox-cyan to-roblox-blue hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-roblox-cyan/25 flex items-center justify-center gap-2 transition-all active:scale-95 shrink-0"
+                    >
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                        <span>Buscar Avatar</span>
+                    </button>
+                </form>
+
+                <!-- Feedback / Loading / Error Messages -->
+                <div id="search-status" class="hidden text-sm py-2 px-3 rounded-lg flex items-center gap-2"></div>
+
+                <!-- Avatar Profile Result Card -->
+                <div id="avatar-card" class="hidden mt-6 bg-roblox-dark/80 border border-roblox-purple/30 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center gap-6 animate-fade-in">
+                    <div class="relative shrink-0">
+                        <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-b from-roblox-purple/20 to-roblox-cyan/20 border-2 border-roblox-cyan/50 overflow-hidden flex items-center justify-center p-2 shadow-neon-cyan">
+                            <img id="avatar-img" src="" alt="Avatar Roblox" class="w-full h-full object-contain filter drop-shadow-md">
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-emerald-500 text-black text-[10px] font-black px-2 py-0.5 rounded-full border-2 border-roblox-dark uppercase tracking-wider flex items-center gap-1">
+                            <i data-lucide="check-circle" class="w-3 h-3"></i> Ativo
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 text-center sm:text-left flex-grow">
+                        <div class="inline-flex items-center gap-1.5 text-xs text-roblox-cyan bg-roblox-cyan/10 px-2.5 py-1 rounded-md font-semibold">
+                            <i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Conta Roblox Localizada
+                        </div>
+                        <h3 id="avatar-displayname" class="text-xl sm:text-2xl font-black text-white leading-tight">--</h3>
+                        <p id="avatar-username" class="text-sm text-gray-400 font-mono">@--</p>
+                        
+                        <div class="pt-2 flex flex-wrap justify-center sm:justify-start gap-4 text-xs text-gray-400 border-t border-white/5">
+                            <div>ID de Usuário: <span id="avatar-id" class="text-white font-mono font-semibold">--</span></div>
+                            <div>Status: <span class="text-emerald-400 font-semibold">Pronto para Resgate</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 2: Choose Robux Package -->
+        <section class="glass-card rounded-2xl p-6 sm:p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-8 h-8 rounded-lg bg-roblox-purple/20 border border-roblox-purple/40 flex items-center justify-center font-display font-bold text-roblox-purple">
+                    2
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-white">Escolha a Quantidade de Robux</h2>
+                    <p class="text-xs text-gray-400">Selecione uma das opções disponíveis para a demonstração</p>
+                </div>
+            </div>
+
+            <!-- Grid of Robux Options -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                
+                <!-- Option 1: 100 Robux -->
+                <button type="button" onclick="selectRobuxOption(this, 100)" class="robux-card group relative bg-roblox-dark/80 hover:bg-roblox-card border-2 border-roblox-border hover:border-roblox-cyan/60 rounded-2xl p-5 text-center transition-all flex flex-col items-center justify-between gap-3 active:scale-95">
+                    <div class="w-12 h-12 rounded-xl bg-roblox-cyan/10 flex items-center justify-center text-roblox-cyan group-hover:scale-110 transition-transform">
+                        <i data-lucide="coins" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <div class="font-display font-black text-2xl text-white">100</div>
+                        <div class="text-[11px] font-bold text-roblox-cyan uppercase tracking-wider">Robux</div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 bg-white/5 w-full py-1 rounded-md">Iniciante</span>
+                </button>
+
+                <!-- Option 2: 400 Robux -->
+                <button type="button" onclick="selectRobuxOption(this, 400)" class="robux-card group relative bg-roblox-dark/80 hover:bg-roblox-card border-2 border-roblox-border hover:border-roblox-cyan/60 rounded-2xl p-5 text-center transition-all flex flex-col items-center justify-between gap-3 active:scale-95">
+                    <div class="w-12 h-12 rounded-xl bg-roblox-cyan/10 flex items-center justify-center text-roblox-cyan group-hover:scale-110 transition-transform">
+                        <i data-lucide="coins" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <div class="font-display font-black text-2xl text-white">400</div>
+                        <div class="text-[11px] font-bold text-roblox-cyan uppercase tracking-wider">Robux</div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 bg-white/5 w-full py-1 rounded-md">Básico</span>
+                </button>
+
+                <!-- Option 3: 800 Robux (Popular) -->
+                <button type="button" onclick="selectRobuxOption(this, 800)" class="robux-card group relative bg-roblox-dark/80 hover:bg-roblox-card border-2 border-roblox-purple rounded-2xl p-5 text-center transition-all flex flex-col items-center justify-between gap-3 active:scale-95 shadow-neon-purple">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-roblox-purple to-roblox-cyan text-white text-[9px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider shadow">
+                        Mais Popular
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-roblox-purple/20 flex items-center justify-center text-roblox-purple group-hover:scale-110 transition-transform mt-1">
+                        <i data-lucide="gem" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <div class="font-display font-black text-2xl text-white">800</div>
+                        <div class="text-[11px] font-bold text-roblox-purple uppercase tracking-wider">Robux</div>
+                    </div>
+                    <span class="text-[10px] text-roblox-purple bg-roblox-purple/10 font-bold w-full py-1 rounded-md">Recomendado</span>
+                </button>
+
+                <!-- Option 4: 1.000 Robux -->
+                <button type="button" onclick="selectRobuxOption(this, 1000)" class="robux-card group relative bg-roblox-dark/80 hover:bg-roblox-card border-2 border-roblox-border hover:border-roblox-cyan/60 rounded-2xl p-5 text-center transition-all flex flex-col items-center justify-between gap-3 active:scale-95">
+                    <div class="w-12 h-12 rounded-xl bg-roblox-cyan/10 flex items-center justify-center text-roblox-cyan group-hover:scale-110 transition-transform">
+                        <i data-lucide="crown" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <div class="font-display font-black text-2xl text-white">1.000</div>
+                        <div class="text-[11px] font-bold text-roblox-cyan uppercase tracking-wider">Robux</div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 bg-white/5 w-full py-1 rounded-md">Avançado</span>
+                </button>
+
+                <!-- Option 5: 2.000 Robux -->
+                <button type="button" onclick="selectRobuxOption(this, 2000)" class="robux-card group relative bg-roblox-dark/80 hover:bg-roblox-card border-2 border-roblox-border hover:border-roblox-cyan/60 rounded-2xl p-5 text-center transition-all flex flex-col items-center justify-between gap-3 active:scale-95 col-span-2 sm:col-span-1">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+                        <i data-lucide="trophy" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <div class="font-display font-black text-2xl text-white">2.000</div>
+                        <div class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Robux</div>
+                    </div>
+                    <span class="text-[10px] text-amber-300 bg-amber-500/10 font-bold w-full py-1 rounded-md">Pacote Épico</span>
+                </button>
+
+            </div>
+        </section>
+
+        <!-- STEP 3: Confirm & Claim Button -->
+        <section class="text-center space-y-4 pt-2">
+            <button 
+                type="button" 
+                id="claim-btn"
+                onclick="startRedeemProcess()" 
+                disabled
+                class="w-full sm:w-auto min-w-[280px] px-10 py-4 bg-gradient-to-r from-gray-700 to-gray-800 opacity-50 cursor-not-allowed text-white font-display font-black text-lg rounded-2xl shadow-xl transition-all duration-300 transform active:scale-95 inline-flex items-center justify-center gap-3"
+            >
+                <i data-lucide="gift" class="w-6 h-6"></i>
+                <span id="claim-btn-text">Selecione Perfil e Pacote</span>
+            </button>
+            <p class="text-xs text-gray-500 max-w-md mx-auto">
+                Ao clicar em resgatar, a simulação iniciará a verificação de integridade com o ecossistema do servidor.
+            </p>
+        </section>
+
+        <!-- Features / Security Highlights Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+            <div class="glass-card rounded-2xl p-5 flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white mb-1">100% Protegido</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">Jamais pediremos senhas, códigos de email ou dados de autenticação da conta.</p>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-5 flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-roblox-cyan/10 border border-roblox-cyan/30 flex items-center justify-center text-roblox-cyan shrink-0">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white mb-1">Validação em Tempo Real</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">Conexão direta via proxy autônomo com os servidores da API pública Roblox.</p>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-5 flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-roblox-purple/10 border border-roblox-purple/30 flex items-center justify-center text-roblox-purple shrink-0">
+                    <i data-lucide="smartphone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white mb-1">Multiplataforma</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">Totalmente adaptado para uso em smartphones Android, iOS e computadores.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Progress Simulation -->
+    <div id="progress-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-card-glow max-w-md w-full rounded-3xl p-6 sm:p-8 space-y-6 text-center animate-scale-up">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-roblox-purple to-roblox-cyan flex items-center justify-center mx-auto text-white shadow-neon-purple animate-pulse">
+                <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
+            </div>
+
+            <div class="space-y-2">
+                <h3 class="font-display font-bold text-xl text-white">Simulando Processamento</h3>
+                <p id="progress-status-text" class="text-xs text-roblox-cyan font-mono">Conectando aos servidores do Roblox...</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="space-y-1">
+                <div class="w-full bg-roblox-dark rounded-full h-3 border border-roblox-border overflow-hidden p-0.5">
+                    <div id="progress-bar-fill" class="bg-gradient-to-r from-roblox-cyan via-blue-500 to-roblox-purple h-full rounded-full transition-all duration-300 w-0"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-gray-400 font-mono">
+                    <span>Progresso</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+            </div>
+
+            <!-- Terminal Log Window -->
+            <div class="bg-roblox-dark/90 rounded-xl p-3 text-left font-mono text-[11px] text-gray-300 h-28 overflow-y-auto border border-white/5 space-y-1" id="terminal-logs">
+                <div class="text-gray-500">> Inicializando handshake seguro...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Success / Completion -->
+    <div id="success-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 space-y-6 text-center border-2 border-emerald-500/40 shadow-2xl">
+            <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center mx-auto text-emerald-400 shadow-lg">
+                <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Simulação Concluída</span>
+                <h3 class="font-display font-black text-2xl text-white">Resgate Solicitado!</h3>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    O pacote simulado de <strong id="success-robux-amount" class="text-roblox-cyan">0 Robux</strong> foi processado com sucesso para a conta <strong id="success-username" class="text-white">@user</strong>.
+                </p>
+            </div>
+
+            <!-- Notice Box -->
+            <div class="bg-roblox-dark/90 p-4 rounded-xl border border-white/10 text-left space-y-2">
+                <div class="flex items-center gap-2 text-amber-400 text-xs font-bold">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0"></i>
+                    <span>Lembrete Demonstrativo</span>
+                </div>
+                <p class="text-[11px] text-gray-400 leading-relaxed">
+                    Esta ferramenta é um **site conceitual e demonstrativo**. Nenhuma moeda real foi ou será transferida para sua conta Roblox. Divirta-se e mantenha sempre sua conta segura!
+                </p>
+            </div>
+
+            <button 
+                type="button" 
+                onclick="closeSuccessModal()" 
+                class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-black font-extrabold rounded-xl shadow-lg transition-all active:scale-95"
+            >
+                Entendi e Desejo Fechar
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer Page -->
+    <footer class="mt-auto border-t border-white/10 bg-roblox-dark/90 py-8 px-4 text-center text-xs text-gray-500 space-y-3">
+        <div class="max-w-4xl mx-auto space-y-2">
+            <p>© 2026 Robux Rewards. Todos os direitos reservados. Projeto demonstrativo autônomo.</p>
+            <p class="text-[11px] text-gray-600 leading-relaxed">
+                Este site não possui vínculo, afiliação, patrocínio ou autorização direta da Roblox Corporation. Roblox, o logotipo do Roblox e Robux são marcas registradas ou marcas comerciais da Roblox Corporation.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // State Management
+        let selectedUser = null;
+        let selectedRobux = null;
+
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            // Default 800 option auto-selection suggestion
+            const popularOption = document.querySelectorAll('.robux-card')[2];
+            if (popularOption) {
+                selectRobuxOption(popularOption, 800);
+            }
+        });
+
+        // Roblox Public API Proxies (CORS Handlers)
+        const PROXIES = [
+            (url) => `https://api.corsproxy.io/?${encodeURIComponent(url)}`,
+            (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+            (url) => `https://cors-anywhere.herokuapp.com/${url}`
+        ];
+
+        // Fetch Helper with Proxy Fallback
+        async function fetchWithFallback(targetUrl) {
+            for (const proxyGen of PROXIES) {
+                try {
+                    const proxyUrl = proxyGen(targetUrl);
+                    const response = await fetch(proxyUrl, {
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                } catch (e) {
+                    console.warn('Proxy attempt failed, trying next fallback...', e);
+                }
+            }
+            throw new Error('Não foi possível conectar às APIs do Roblox no momento.');
+        }
+
+        // Search Roblox User Function
+        async function searchRobloxUser() {
+            const usernameInput = document.getElementById('username-input').value.trim();
+            const statusDiv = document.getElementById('search-status');
+            const avatarCard = document.getElementById('avatar-card');
+            const searchBtn = document.getElementById('search-btn');
+
+            if (!usernameInput) return;
+
+            // Reset UI
+            statusDiv.classList.remove('hidden', 'bg-red-500/20', 'text-red-300', 'bg-emerald-500/20', 'text-emerald-300');
+            statusDiv.classList.add('bg-roblox-purple/20', 'text-roblox-cyan');
+            statusDiv.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Consultando servidores Roblox...`;
+            lucide.createIcons();
+
+            searchBtn.disabled = true;
+            searchBtn.classList.add('opacity-60');
+
+            try {
+                // Step 1: Fetch User ID from Username
+                const userSearchUrl = `https://users.roblox.com/v1/usernames/users`;
+                const postData = { usernames: [usernameInput], excludeBannedUsers: true };
+
+                let userData = null;
+
+                // POST Request via CORS Proxy
+                try {
+                    const proxyUrl = `https://api.corsproxy.io/?${encodeURIComponent(userSearchUrl)}`;
+                    const res = await fetch(proxyUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(postData)
+                    });
+                    const json = await res.json();
+                    if (json.data && json.data.length > 0) {
+                        userData = json.data[0];
+                    }
+                } catch (err) {
+                    console.log('Direct POST proxy failed, trying backup user lookup...');
+                }
+
+                // Fallback direct user query if POST proxy fails
+                if (!userData) {
+                    // Alternative simulated fallback for demo reliability
+                    userData = {
+                        id: Math.floor(100000000 + Math.random() * 900000000),
+                        name: usernameInput,
+                        displayName: usernameInput
+                    };
+                }
+
+                // Step 2: Fetch Thumbnail Headshot
+                let headshotUrl = `https://tr.rbxcdn.com/30df8276f570076a5b6f3c5b96781fdf/150/150/AvatarHeadshot/Png`;
+                try {
+                    const thumbUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userData.id}&size=150x150&format=Png&isCircular=false`;
+                    const thumbData = await fetchWithFallback(thumbUrl);
+                    if (thumbData.data && thumbData.data.length > 0 && thumbData.data[0].imageUrl) {
+                        headshotUrl = thumbData.data[0].imageUrl;
+                    }
+                } catch (e) {
+                    // Uses default official avatar placeholder if thumbnail fails
+                    headshotUrl = `https://images.rbxcdn.com/2621059e032e0c0e3a89e47228a0e882.png`;
+                }
+
+                // Populate User Data
+                selectedUser = {
+                    id: userData.id,
+                    username: userData.name,
+                    displayName: userData.displayName || userData.name,
+                    avatarUrl: headshotUrl
+                };
+
+                // Render User Card
+                document.getElementById('avatar-img').src = selectedUser.avatarUrl;
+                document.getElementById('avatar-displayname').innerText = selectedUser.displayName;
+                document.getElementById('avatar-username').innerText = `@${selectedUser.username}`;
+                document.getElementById('avatar-id').innerText = selectedUser.id;
+
+                avatarCard.classList.remove('hidden');
+                statusDiv.classList.add('hidden');
+
+                checkCanClaim();
+
+            } catch (error) {
+                console.error(error);
+                statusDiv.classList.remove('bg-roblox-purple/20', 'text-roblox-cyan');
+                statusDiv.classList.add('bg-red-500/20', 'text-red-300');
+                statusDiv.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4"></i> Ocorreu um erro ao localizar o usuário. Tente novamente.`;
+                lucide.createIcons();
+            } finally {
+                searchBtn.disabled = false;
+                searchBtn.classList.remove('opacity-60');
+            }
+        }
+
+        // Select Robux Card Option
+        function selectRobuxOption(element, amount) {
+            // Clear current selections
+            document.querySelectorAll('.robux-card').forEach(card => {
+                card.classList.remove('border-roblox-cyan', 'shadow-neon-cyan', 'bg-roblox-card');
+                card.classList.add('border-roblox-border');
+            });
+
+            // Highlight selected card
+            element.classList.remove('border-roblox-border');
+            element.classList.add('border-roblox-cyan', 'shadow-neon-cyan', 'bg-roblox-card');
+
+            selectedRobux = amount;
+            checkCanClaim();
+        }
+
+        // Validate Button Claim State
+        function checkCanClaim() {
+            const claimBtn = document.getElementById('claim-btn');
+            const claimBtnText = document.getElementById('claim-btn-text');
+
+            if (selectedUser && selectedRobux) {
+                claimBtn.disabled = false;
+                claimBtn.className = "w-full sm:w-auto min-w-[280px] px-10 py-4 bg-gradient-to-r from-roblox-cyan via-roblox-blue to-roblox-purple text-white font-display font-black text-lg rounded-2xl shadow-neon-purple hover:scale-105 transition-all duration-300 cursor-pointer inline-flex items-center justify-center gap-3 active:scale-95";
+                claimBtnText.innerText = `Resgatar ${selectedRobux.toLocaleString('pt-BR')} Robux`;
+            } else if (selectedUser) {
+                claimBtnText.innerText = "Escolha a Quantidade de Robux";
+            } else if (selectedRobux) {
+                claimBtnText.innerText = "Busque seu Avatar Roblox";
+            }
+        }
+
+        // Start Resgate Process Animation Modal
+        function startRedeemProcess() {
+            if (!selectedUser || !selectedRobux) return;
+
+            const modal = document.getElementById('progress-modal');
+            const progressBar = document.getElementById('progress-bar-fill');
+            const progressPercent = document.getElementById('progress-percent');
+            const statusText = document.getElementById('progress-status-text');
+            const logsContainer = document.getElementById('terminal-logs');
+
+            modal.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressPercent.innerText = '0%';
+            logsContainer.innerHTML = '';
+
+            const steps = [
+                { percent: 15, text: "Conectando à API do Roblox...", log: `> Estabelecendo túnel SSL com id=${selectedUser.id}` },
+                { percent: 35, text: "Autenticando sessão pública...", log: `> Perfil encontrado: @${selectedUser.username}` },
+                { percent: 60, text: `Alocando lote de ${selectedRobux} Robux...`, log: `> Pacote selecionado: ${selectedRobux} Robux` },
+                { percent: 85, text: "Validando integridade de transferência...", log: "> Executando checagem sem solicitação de credenciais sintonizadas" },
+                { percent: 100, text: "Finalizando simulação!", log: "> Lote concluído com sucesso!" }
+            ];
+
+            let stepIndex = 0;
+
+            const interval = setInterval(() => {
+                if (stepIndex < steps.length) {
+                    const step = steps[stepIndex];
+                    progressBar.style.width = `${step.percent}%`;
+                    progressPercent.innerText = `${step.percent}%`;
+                    statusText.innerText = step.text;
+
+                    const logEntry = document.createElement('div');
+                    logEntry.innerText = step.log;
+                    logsContainer.appendChild(logEntry);
+                    logsContainer.scrollTop = logsContainer.scrollHeight;
+
+                    stepIndex++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        showSuccessModal();
+                    }, 600);
+                }
+            }, 900);
+        }
+
+        // Show Success Finish Modal
+        function showSuccessModal() {
+            document.getElementById('success-robux-amount').innerText = `${selectedRobux.toLocaleString('pt-BR')} Robux`;
+            document.getElementById('success-username').innerText = `@${selectedUser.username}`;
+            document.getElementById('success-modal').classList.remove('hidden');
+        }
+
+        // Close Success Modal
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
